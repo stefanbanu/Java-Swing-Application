@@ -1,6 +1,5 @@
 package com.stefanbanu.app;
 
-import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 public class MainClass {
@@ -9,11 +8,9 @@ public class MainClass {
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				JFrame frame = new JFrame("Hello World");
-				frame.setSize(600, 500);
-				frame.setLocationRelativeTo(null);
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame.setVisible(true);
+				new MainFrame();
+				
+				
 			}
 		});	
 	}
