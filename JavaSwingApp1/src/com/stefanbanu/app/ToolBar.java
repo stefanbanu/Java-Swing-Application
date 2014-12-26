@@ -9,10 +9,14 @@ import javax.swing.JButton;
 
 public class ToolBar extends javax.swing.JPanel implements ActionListener {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7930172032227393497L;
 	JButton button1;
 	JButton button2;
 	
-	private TextPanel textPanel;
+	private MyListener listener;
 	
 	public ToolBar() {
 		
@@ -28,18 +32,19 @@ public class ToolBar extends javax.swing.JPanel implements ActionListener {
 		add(button2);
 	}
 
-	public void setTextPanel(TextPanel textPanel) {
-		this.textPanel = textPanel;
-		
+	public void setStringListener(MyListener listener) {
+		this.listener = listener;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 		if(button1 == obj){
-			textPanel.appendText("Hello! \n");
+			if(listener != null){
+				listener.stringActionPerformed("Hello World! \n");
+			}
 		}else
-			textPanel.appendText("Goodbye! \n");
+			listener.stringActionPerformed("Goodbye World! \n");
 		
 	}
 

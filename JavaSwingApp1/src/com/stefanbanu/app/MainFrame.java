@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame{
 
 	private static final long serialVersionUID = 2121833309172278947L;
 
@@ -20,7 +20,14 @@ public class MainFrame extends JFrame {
 		toolBar = new ToolBar();
 		
 		
-		toolBar.setTextPanel(textPanel);
+		toolBar.setStringListener(new MyListener() {
+			
+			@Override
+			public void stringActionPerformed(String text) {
+				textPanel.appendText(text);
+				
+			}
+		});
 		
 		add(toolBar, BorderLayout.NORTH);
 		add(textPanel, BorderLayout.CENTER);
@@ -30,4 +37,5 @@ public class MainFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
+
 }
