@@ -41,14 +41,12 @@ public class FormPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("fdsfsd");
 				String name = nameField.getText();
 				String occupation = occupationField.getText();
 				
 				FormEvent fe = new FormEvent(this, name, occupation);
 				
 				if(formListener != null){
-					System.out.println("not null");
 					formListener.formEventOccurred(fe);
 				}
 				
