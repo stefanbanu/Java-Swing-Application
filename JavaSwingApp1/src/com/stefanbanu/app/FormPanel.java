@@ -20,7 +20,6 @@ public class FormPanel extends JPanel {
 	private JTextField occupationField;
 	private JButton okBtn;
 	
-	Insets myInset;
 
 	public FormPanel() {
 	
@@ -33,7 +32,6 @@ public class FormPanel extends JPanel {
 		occupationLabel = new JLabel("Occupation: ");
 		nameField = new JTextField(10);
 		occupationField = new JTextField(10);
-		myInset = new Insets(0,0,0,0);
 		
 		okBtn = new JButton("OK");
 		
@@ -60,7 +58,6 @@ public class FormPanel extends JPanel {
 		
 		gc.gridx = 1;
 		gc.gridy = 0;
-		gc.insets = myInset;
 		gc.anchor = GridBagConstraints.LINE_START;
 		add(nameField, gc);
 		
@@ -77,7 +74,6 @@ public class FormPanel extends JPanel {
 		
 		gc.gridy = 1;
 		gc.gridx = 1;
-		gc.insets = myInset;
 		gc.anchor = GridBagConstraints.LINE_START;
 		add(occupationField, gc);
 		
@@ -89,7 +85,6 @@ public class FormPanel extends JPanel {
 		gc.gridy = 2;
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
-		gc.insets = myInset;
 		add(okBtn, gc);
 		
 		
