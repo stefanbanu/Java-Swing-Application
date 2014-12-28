@@ -22,10 +22,18 @@ public class MainFrame extends JFrame{
 		formPanel = new FormPanel();
 		
 		toolBar.setStringListener(new MyListener() {
-			
-			@Override
 			public void stringActionPerformed(String text) {
 				textPanel.appendText(text);
+				
+			}
+		});
+		
+		formPanel.setFormListener(new FormListener() {
+			public void formEventOccurred(FormEvent e) {
+				String name = e.getName();
+				String occupation = e.getOccupation();
+				
+				textPanel.appendText(name + " - " + occupation + "\n");
 				
 			}
 		});

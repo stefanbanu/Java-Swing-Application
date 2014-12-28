@@ -16,6 +16,7 @@ public class TextPanel extends javax.swing.JPanel {
 
 	private JTextArea textArea;
 	
+	
 	public TextPanel() {
 		textArea = new JTextArea();
 		textArea.setBorder(BorderFactory.createEtchedBorder());
@@ -28,4 +29,6 @@ public class TextPanel extends javax.swing.JPanel {
 	public void appendText(String txt){
 		textArea.append(txt);
 	}
+
+
 }
