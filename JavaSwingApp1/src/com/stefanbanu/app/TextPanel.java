@@ -2,6 +2,7 @@ package com.stefanbanu.app;
 
 import java.awt.BorderLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
@@ -17,6 +18,7 @@ public class TextPanel extends javax.swing.JPanel {
 	
 	public TextPanel() {
 		textArea = new JTextArea();
+		textArea.setBorder(BorderFactory.createEtchedBorder());
 		
 		setLayout(new BorderLayout());
 

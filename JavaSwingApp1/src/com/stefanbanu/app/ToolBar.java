@@ -4,7 +4,9 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.border.Border;
 
 
 public class ToolBar extends javax.swing.JPanel implements ActionListener {
@@ -19,6 +21,11 @@ public class ToolBar extends javax.swing.JPanel implements ActionListener {
 	private MyListener listener;
 	
 	public ToolBar() {
+		Border innerBorder = BorderFactory.createTitledBorder("Tool Bar");
+		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+	//	setBorder(BorderFactory.createTitledBorder( "Tool Bar"));
+	//	setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Tool Bar"));
 		
 		button1 = new JButton("Hello!");
 		button2 = new JButton("Goodbye!");
