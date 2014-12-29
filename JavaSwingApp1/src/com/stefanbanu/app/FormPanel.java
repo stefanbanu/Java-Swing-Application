@@ -8,33 +8,33 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 public class FormPanel extends JPanel {
 	
+	private static final long serialVersionUID = -3649004350813203920L;
 	private JLabel nameLabel;
 	private JLabel occupationLabel;
 	private JTextField nameField;
 	private JTextField occupationField;
 	private JButton okBtn;
 	private FormListener formListener;
+	private JList<Object> ageList;
+	private DefaultListModel<Object> ageModel;
 	
 
 	public FormPanel() {
-	
-		Dimension dim = getPreferredSize();
-		
-		dim.width = 250;
-		setPreferredSize(dim);
-		
 		nameLabel = new JLabel("Name: ");
 		occupationLabel = new JLabel("Occupation: ");
 		nameField = new JTextField(10);
 		occupationField = new JTextField(10);
+		createJList();
 		
 		okBtn = new JButton("OK");
 		okBtn.addActionListener(new ActionListener() {
@@ -43,16 +43,23 @@ public class FormPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				String name = nameField.getText();
 				String occupation = occupationField.getText();
+				AgeCategory obj = (AgeCategory) ageList.getSelectedValue();
 				
-				FormEvent fe = new FormEvent(this, name, occupation);
+				FormEvent ev = new FormEvent(this, name, occupation, obj.getId());
 				
 				if(formListener != null){
-					formListener.formEventOccurred(fe);
+					formListener.formEventOccurred(ev);
 				}
 				
 			}
 		});
-
+	
+		createFormPanel();
+	}
+	private void createFormPanel() {
+		Dimension dim = getPreferredSize();		
+		dim.width = 250;
+		setPreferredSize(dim);
 		Border innerBorder = BorderFactory.createTitledBorder("Add Person");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
@@ -98,17 +105,58 @@ public class FormPanel extends JPanel {
 		////////////Third row ///////////////////////////////////
 		
 		gc.weightx = 1;
-		gc.weighty = 2.0;
+		gc.weighty = 0.2;
 		
 		gc.gridy = 2;
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(ageList, gc);
+		
+		////////////Fourth row ///////////////////////////////////
+
+		gc.weightx = 1;
+		gc.weighty = 2.0;
+
+		gc.gridy = 3;
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(okBtn, gc);
 		
+	}
+	private void createJList() {
+		ageList = new JList<Object>();
+		ageModel = new DefaultListModel<Object>();
+		
+		ageModel.addElement(new AgeCategory(0, "Under 18"));	
+		ageModel.addElement(new AgeCategory(1,"18 to 65"));
+		ageModel.addElement(new AgeCategory(2, "65 or over"));
+		ageList.setModel(ageModel);
+		
+		ageList.setPreferredSize(new Dimension(112, 70));
+		ageList.setBorder(BorderFactory.createEtchedBorder());
+		ageList.setSelectedIndex(1);
 		
 	}
 	public void setFormListener(FormListener formListener) {
 		this.formListener = formListener;
 		
 	}
+}
+class AgeCategory{
+	private int id;
+	private String text;
+
+	public AgeCategory(int id, String text) {
+		this.id = id;
+		this.text = text;
+	}
+	@Override
+	public String toString() {
+	
+		return text;
+	}
+	public int getId() {
+		return id;
+	}
+	
 }
