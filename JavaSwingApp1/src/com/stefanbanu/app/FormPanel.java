@@ -8,8 +8,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -27,6 +30,10 @@ public class FormPanel extends JPanel {
 	private FormListener formListener;
 	private JList<Object> ageList;
 	private DefaultListModel<Object> ageModel;
+	private JComboBox<String> comboBox;
+	private JCheckBox citizenCheck;
+	private JTextField taxField;
+	private JLabel taxLabel;
 	
 
 	public FormPanel() {
@@ -34,7 +41,23 @@ public class FormPanel extends JPanel {
 		occupationLabel = new JLabel("Occupation: ");
 		nameField = new JTextField(10);
 		occupationField = new JTextField(10);
+		citizenCheck = new JCheckBox();
+		taxField = new JTextField(10);
+		taxLabel = new JLabel("Tax ID: ");
 		createJList();
+		createComboBox();
+		
+		// set up tax ID
+		taxLabel.setEnabled(false);
+		taxField.setEnabled(false);
+		
+		citizenCheck.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean isTicked = citizenCheck.isSelected();
+				taxLabel.setEnabled(isTicked);
+				taxField.setEnabled(isTicked);
+			}
+		});
 		
 		okBtn = new JButton("OK");
 		okBtn.addActionListener(new ActionListener() {
@@ -44,8 +67,11 @@ public class FormPanel extends JPanel {
 				String name = nameField.getText();
 				String occupation = occupationField.getText();
 				AgeCategory obj = (AgeCategory) ageList.getSelectedValue();
+				String empCategory = (String) comboBox.getSelectedItem();
+				String taxId = taxField.getText();
+				boolean usCitizen = citizenCheck.isSelected();
 				
-				FormEvent ev = new FormEvent(this, name, occupation, obj.getId());
+				FormEvent ev = new FormEvent(this, name, occupation, obj.getId(), empCategory, taxId, usCitizen);
 				
 				if(formListener != null){
 					formListener.formEventOccurred(ev);
@@ -55,6 +81,16 @@ public class FormPanel extends JPanel {
 		});
 	
 		createFormPanel();
+	}
+	private void createComboBox() {
+		comboBox = new JComboBox<String>();
+		DefaultComboBoxModel<String>	empModel = new DefaultComboBoxModel<String>();
+		empModel.addElement("employed");
+		empModel.addElement("self-employed");
+		empModel.addElement("unemployed");
+		comboBox.setModel(empModel);
+		comboBox.setSelectedIndex(0);
+		
 	}
 	private void createFormPanel() {
 		Dimension dim = getPreferredSize();		
@@ -71,11 +107,12 @@ public class FormPanel extends JPanel {
 		
 		//////////// First row ///////////////////////////////////
 		
+		gc.gridy = 0;
+		
 		gc.weightx = 1;
 		gc.weighty = 0.1;
 		
-		gc.gridx = 0;
-		gc.gridy = 0;
+		gc.gridx = 0;		
 		gc.fill = GridBagConstraints.NONE;
 		gc.anchor = GridBagConstraints.LINE_END;
 		gc.insets = new Insets(0, 0, 0, 5);
@@ -88,6 +125,8 @@ public class FormPanel extends JPanel {
 		
 		////////////Second row ///////////////////////////////////
 		
+		gc.gridy++;
+		
 		gc.weightx = 1;
 		gc.weighty = 0.1;
 		
@@ -97,27 +136,82 @@ public class FormPanel extends JPanel {
 		gc.anchor = GridBagConstraints.LINE_END;
 		add(occupationLabel, gc);
 		
-		gc.gridy = 1;
+		
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.LINE_START;
 		add(occupationField, gc);
 		
 		////////////Third row ///////////////////////////////////
 		
+		gc.gridy++;
+		
 		gc.weightx = 1;
 		gc.weighty = 0.2;
 		
-		gc.gridy = 2;
+		gc.gridx = 0;
+		gc.insets = new Insets(0, 0, 0, 5);
+		gc.anchor = GridBagConstraints.FIRST_LINE_END;
+		add(new JLabel("Age: "), gc);
+				
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(ageList, gc);
 		
-		////////////Fourth row ///////////////////////////////////
+		// //////////Fourth row ///////////////////////////////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 0.2;
+		
+		gc.gridx = 0;
+		gc.insets = new Insets(0, 0, 0, 5);
+		gc.anchor = GridBagConstraints.FIRST_LINE_END;
+		add(new JLabel("Employment: "), gc);
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(comboBox, gc);
+		
+		// //////////Fourth row ///////////////////////////////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 0.2;
+
+		gc.gridx = 0;
+		gc.insets = new Insets(0, 0, 0, 5);
+		gc.anchor = GridBagConstraints.FIRST_LINE_END;
+		add(new JLabel("US citizen: "), gc);
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(citizenCheck, gc);
+		
+		// //////////Fourth row ///////////////////////////////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 0.2;
+
+		gc.gridx = 0;
+		gc.insets = new Insets(0, 0, 0, 5);
+		gc.anchor = GridBagConstraints.FIRST_LINE_END;
+		add(taxLabel, gc);
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(taxField, gc);
+		
+		////////////Fifth row  the button ///////////////////////////////////
+		
+		gc.gridy++;
 
 		gc.weightx = 1;
 		gc.weighty = 2.0;
-
-		gc.gridy = 3;
+		
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(okBtn, gc);
