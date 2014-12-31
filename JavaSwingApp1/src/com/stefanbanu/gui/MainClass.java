@@ -1,4 +1,4 @@
-package com.stefanbanu.app;
+package com.stefanbanu.gui;
 
 import javax.swing.SwingUtilities;
 

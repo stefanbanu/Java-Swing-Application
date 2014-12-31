@@ -1,4 +1,4 @@
-package com.stefanbanu.app;
+package com.stefanbanu.gui;
 
 public interface MyListener {
 

@@ -1,4 +1,4 @@
-package com.stefanbanu.app;
+package com.stefanbanu.gui;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;

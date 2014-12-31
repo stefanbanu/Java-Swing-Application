@@ -1,4 +1,4 @@
-package com.stefanbanu.app;
+package com.stefanbanu.gui;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;

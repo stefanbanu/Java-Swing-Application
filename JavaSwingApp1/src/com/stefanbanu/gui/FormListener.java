@@ -1,4 +1,4 @@
-package com.stefanbanu.app;
+package com.stefanbanu.gui;
 import java.util.EventListener;
 
 public interface FormListener extends EventListener {
