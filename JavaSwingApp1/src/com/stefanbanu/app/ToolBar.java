@@ -21,11 +21,10 @@ public class ToolBar extends javax.swing.JPanel implements ActionListener {
 	private MyListener listener;
 	
 	public ToolBar() {
-		Border innerBorder = BorderFactory.createTitledBorder("Tool Bar");
+		/*Border innerBorder = BorderFactory.createTitledBorder("Tool Bar");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
-		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
-	//	setBorder(BorderFactory.createTitledBorder( "Tool Bar"));
-	//	setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Tool Bar"));
+		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));*/
+
 		
 		button1 = new JButton("Hello!");
 		button2 = new JButton("Goodbye!");

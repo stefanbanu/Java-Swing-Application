@@ -6,8 +6,10 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -16,6 +18,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
@@ -35,6 +38,9 @@ public class FormPanel extends JPanel {
 	private JTextField taxField;
 	private JLabel taxLabel;
 	
+	private JRadioButton maleRadio;
+	private JRadioButton femaleRadio;
+	private ButtonGroup genderGroup;
 
 	public FormPanel() {
 		nameLabel = new JLabel("Name: ");
@@ -44,8 +50,16 @@ public class FormPanel extends JPanel {
 		citizenCheck = new JCheckBox();
 		taxField = new JTextField(10);
 		taxLabel = new JLabel("Tax ID: ");
+		
 		createJList();
 		createComboBox();
+		createRadioButtons();
+		
+		// set up some mnemonics
+		okBtn = new JButton("OK");
+		okBtn.setMnemonic(KeyEvent.VK_O);
+		nameLabel.setDisplayedMnemonic(KeyEvent.VK_N);
+		nameLabel.setLabelFor(nameField);
 		
 		// set up tax ID
 		taxLabel.setEnabled(false);
@@ -59,7 +73,7 @@ public class FormPanel extends JPanel {
 			}
 		});
 		
-		okBtn = new JButton("OK");
+		
 		okBtn.addActionListener(new ActionListener() {
 			
 			@Override
@@ -70,8 +84,9 @@ public class FormPanel extends JPanel {
 				String empCategory = (String) comboBox.getSelectedItem();
 				String taxId = taxField.getText();
 				boolean usCitizen = citizenCheck.isSelected();
+				String genderCommand = genderGroup.getSelection().getActionCommand();
 				
-				FormEvent ev = new FormEvent(this, name, occupation, obj.getId(), empCategory, taxId, usCitizen);
+				FormEvent ev = new FormEvent(this, name, occupation, obj.getId(), empCategory, taxId, usCitizen, genderCommand);
 				
 				if(formListener != null){
 					formListener.formEventOccurred(ev);
@@ -81,6 +96,21 @@ public class FormPanel extends JPanel {
 		});
 	
 		createFormPanel();
+	}
+
+	private void createRadioButtons() {
+		maleRadio = new JRadioButton("male");
+		femaleRadio = new JRadioButton("female");
+		genderGroup = new ButtonGroup();
+		
+		maleRadio.setActionCommand("male");
+		femaleRadio.setActionCommand("female");
+		maleRadio.setSelected(true);
+
+		// set up the radio buttons
+		genderGroup.add(maleRadio);
+		genderGroup.add(femaleRadio);
+
 	}
 	private void createComboBox() {
 		comboBox = new JComboBox<String>();
@@ -205,7 +235,34 @@ public class FormPanel extends JPanel {
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(taxField, gc);
 		
-		////////////Fifth row  the button ///////////////////////////////////
+		// ////////// maleRadio button row ///////////////////////////////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 0;
+
+		gc.gridx = 0;
+		gc.insets = new Insets(0, 0, 0, 5);
+		gc.anchor = GridBagConstraints.LINE_END;
+		add(new JLabel("Gender: "), gc);
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(maleRadio, gc);
+		
+		////////////femaleRadion button row ///////////////////////////////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 0.2;
+
+		gc.gridx = 1;
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(femaleRadio, gc);
+		
+		//////////// Fifth row  the ok button ///////////////////////////////////
 		
 		gc.gridy++;
 
