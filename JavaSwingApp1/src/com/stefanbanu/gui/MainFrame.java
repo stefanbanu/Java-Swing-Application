@@ -15,6 +15,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
+import com.stefanbanu.controller.Controller;
+
 public class MainFrame extends JFrame {
 
 	private static final long serialVersionUID = 2121833309172278947L;
@@ -22,7 +24,10 @@ public class MainFrame extends JFrame {
 	private TextPanel textPanel;
 	private ToolBar toolBar;
 	private FormPanel formPanel;
+	private TablePanel tablePanel;
+	
 	private JFileChooser fileChooser;
+	private Controller controller;
 
 	public MainFrame() {
 		super("My App");
@@ -31,10 +36,15 @@ public class MainFrame extends JFrame {
 
 		textPanel = new TextPanel();
 		toolBar = new ToolBar();
-		formPanel = new FormPanel();
+		formPanel = new FormPanel();		
+		tablePanel = new TablePanel();
 		
 		fileChooser = new JFileChooser();
 		fileChooser.addChoosableFileFilter(new PersonFileFilter());
+		
+		controller = new Controller();
+		
+		tablePanel.setData(controller.getPeople());
 
 		setJMenuBar(createMenuBar());
 
@@ -47,21 +57,24 @@ public class MainFrame extends JFrame {
 
 		formPanel.setFormListener(new FormListener() {
 			public void formEventOccurred(FormEvent e) {
-				String name = e.getName();
+				/*String name = e.getName();
 				String occupation = e.getOccupation();
 				int age = e.getAge();
 				String empCat = e.getEmploymentCategory();
-				String gender = e.getGender();
+				String gender = e.getGender();*/
+				
 
-				textPanel.appendText(name + " - " + occupation + " - " + age
-						+ "," + empCat + " gender: " + gender + "\n");
+			/*	textPanel.appendText(name + " - " + occupation + " - " + age
+						+ "," + empCat + " gender: " + gender + "\n");*/
+				controller.addPerson(e);
+				tablePanel.refresh();
 
 			}
 		});
 
 		add(formPanel, BorderLayout.WEST);
 		add(toolBar, BorderLayout.NORTH);
-		add(textPanel, BorderLayout.CENTER);
+		add(tablePanel, BorderLayout.CENTER);
 
 		setMinimumSize(new Dimension(600, 500));
 		setSize(600, 500);

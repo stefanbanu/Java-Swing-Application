@@ -120,6 +120,7 @@ public class FormPanel extends JPanel {
 		empModel.addElement("unemployed");
 		comboBox.setModel(empModel);
 		comboBox.setSelectedIndex(0);
+		comboBox.setEditable(true);
 		
 	}
 	private void createFormPanel() {
@@ -286,6 +287,7 @@ public class FormPanel extends JPanel {
 		ageList.setPreferredSize(new Dimension(112, 70));
 		ageList.setBorder(BorderFactory.createEtchedBorder());
 		ageList.setSelectedIndex(1);
+		
 		
 	}
 	public void setFormListener(FormListener formListener) {
