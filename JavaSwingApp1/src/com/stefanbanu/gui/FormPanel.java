@@ -90,12 +90,26 @@ public class FormPanel extends JPanel {
 				
 				if(formListener != null){
 					formListener.formEventOccurred(ev);
+					clearingFields();
 				}
 				
 			}
+
+	
 		});
 	
 		createFormPanel();
+	}
+	
+	private void clearingFields() {
+		nameField.setText("");
+		occupationField.setText("");
+		ageList.setSelectedIndex(0);
+		comboBox.setSelectedIndex(0);
+		citizenCheck.setSelected(false);
+		maleRadio.setSelected(true);
+		taxField.setText("");
+		
 	}
 
 	private void createRadioButtons() {
@@ -120,7 +134,6 @@ public class FormPanel extends JPanel {
 		empModel.addElement("unemployed");
 		comboBox.setModel(empModel);
 		comboBox.setSelectedIndex(0);
-		comboBox.setEditable(true);
 		
 	}
 	private void createFormPanel() {

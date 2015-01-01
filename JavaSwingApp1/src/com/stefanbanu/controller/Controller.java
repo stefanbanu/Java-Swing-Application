@@ -1,5 +1,7 @@
 package com.stefanbanu.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import com.stefanbanu.gui.FormEvent;
@@ -64,5 +66,12 @@ public class Controller {
 		
 		Person newPerson = new Person(name, occupation, ageCategory, empCategory, taxId, isUs, genderCat  );
 		db.addPerson(newPerson);
+	}
+	
+	public void saveToFile(File file) throws IOException{
+		db.saveToFile(file);
+	}
+	public void loadFromFile(File file) throws IOException{
+		db.loadFromFile(file);
 	}
 }

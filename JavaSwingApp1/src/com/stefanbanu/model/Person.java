@@ -1,6 +1,10 @@
 package com.stefanbanu.model;
 
-public class Person {
+import java.io.Serializable;
+
+public class Person implements Serializable {
+
+	private static final long serialVersionUID = -8574580219861786508L;
 
 	private static int count = 0;
 	

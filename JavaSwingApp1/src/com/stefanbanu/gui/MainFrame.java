@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
@@ -50,6 +51,7 @@ public class MainFrame extends JFrame {
 
 		toolBar.setStringListener(new MyListener() {
 			public void stringActionPerformed(String text) {
+				// Hello button and goodbye button functionalities from the toolbar
 				textPanel.appendText(text);
 
 			}
@@ -77,7 +79,7 @@ public class MainFrame extends JFrame {
 		add(tablePanel, BorderLayout.CENTER);
 
 		setMinimumSize(new Dimension(600, 500));
-		setSize(600, 500);
+		setSize(1300, 500);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
@@ -124,7 +126,13 @@ public class MainFrame extends JFrame {
 		importDataItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION){
-					System.out.println(fileChooser.getSelectedFile());
+					try {
+						controller.loadFromFile(fileChooser.getSelectedFile());
+						tablePanel.refresh();
+					} catch (IOException e1) {
+						JOptionPane.showMessageDialog(MainFrame.this, "File not loaded", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+
 				}
 				
 			}
@@ -133,7 +141,11 @@ public class MainFrame extends JFrame {
 		exportDataItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(fileChooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION){
-					System.out.println(fileChooser.getSelectedFile());
+					try {
+						controller.saveToFile(fileChooser.getSelectedFile());
+					} catch (IOException e1) {
+						JOptionPane.showMessageDialog(MainFrame.this, "Data not saved to file", "Error", JOptionPane.ERROR_MESSAGE);
+					}
 				}
 				
 			}
