@@ -2,28 +2,28 @@ package com.stefanbanu.model;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Database {
 
-	private ArrayList<Person> people;
+	private List<Person> people;
 	
 	public Database() {
-		people = new ArrayList<Person>();
+		people = new LinkedList<Person>();
 	}
 	public void addPerson(Person person) {
 		people.add(person);
 
 	}
 	public List<Person> getListPeople(){
-		return people;
+		return Collections.unmodifiableList(people);
 	}
 	
 	public void saveToFile(File file) throws IOException{
@@ -52,5 +52,9 @@ public class Database {
 			e.printStackTrace();
 		}
 		ois.close();
+	}
+	public void removePerson(int row) {
+		people.remove(row);
+		
 	}
 }

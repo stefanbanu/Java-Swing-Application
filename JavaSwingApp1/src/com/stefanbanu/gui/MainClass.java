@@ -8,9 +8,7 @@ public class MainClass {
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				new MainFrame();
-				System.out.println("Stefan");
-				
+				new MainFrame();				
 			}
 		});	
 	}

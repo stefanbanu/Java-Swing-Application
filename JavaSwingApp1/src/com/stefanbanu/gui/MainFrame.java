@@ -26,6 +26,7 @@ public class MainFrame extends JFrame {
 	private ToolBar toolBar;
 	private FormPanel formPanel;
 	private TablePanel tablePanel;
+	private PrefsDialog prefsDialog;
 	
 	private JFileChooser fileChooser;
 	private Controller controller;
@@ -39,6 +40,7 @@ public class MainFrame extends JFrame {
 		toolBar = new ToolBar();
 		formPanel = new FormPanel();		
 		tablePanel = new TablePanel();
+		prefsDialog = new PrefsDialog(this);
 		
 		fileChooser = new JFileChooser();
 		fileChooser.addChoosableFileFilter(new PersonFileFilter());
@@ -46,6 +48,12 @@ public class MainFrame extends JFrame {
 		controller = new Controller();
 		
 		tablePanel.setData(controller.getPeople());
+		
+		tablePanel.setPersonTableListener(new PersonTableListener(){
+			public void rowDeleted(int row){
+				controller.removePerson(row);
+		}
+	});
 
 		setJMenuBar(createMenuBar());
 
@@ -99,13 +107,25 @@ public class MainFrame extends JFrame {
 
 		JMenu windowMenu = new JMenu("Window");
 		JMenu showMenu = new JMenu("Show");
+		JMenuItem prefsItem = new JMenuItem("Preferences...");
+		
 		JCheckBoxMenuItem showFormItem = new JCheckBoxMenuItem("Person Form");
 		showFormItem.setSelected(true);
+		
 		showMenu.add(showFormItem);
 		windowMenu.add(showMenu);
+		windowMenu.add(prefsItem);
 
 		menuBar.add(menuFile);
 		menuBar.add(windowMenu);
+		
+		prefsItem.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent arg0) {
+				prefsDialog.setVisible(true);
+				
+			}
+		});
 
 		showFormItem.addActionListener(new ActionListener() {
 
@@ -121,6 +141,9 @@ public class MainFrame extends JFrame {
 		exitItem.setMnemonic(KeyEvent.VK_X);
 
 		exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
+				ActionEvent.CTRL_MASK));
+		
+		importDataItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I,
 				ActionEvent.CTRL_MASK));
 		
 		importDataItem.addActionListener(new ActionListener() {
