@@ -31,7 +31,7 @@ public class Controller {
 		
 		switch (ageCatId) {
 		case 0:
-			ageCategory = AgeCategory.child;
+			ageCategory = AgeCategory.minor;
 			break;
 		case 1:
 			ageCategory = AgeCategory.adult;

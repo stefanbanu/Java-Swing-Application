@@ -32,7 +32,7 @@ public class MainFrame extends JFrame {
 	private Controller controller;
 
 	public MainFrame() {
-		super("My App");
+		super("Person Form!");
 
 		setLayout(new BorderLayout());
 
